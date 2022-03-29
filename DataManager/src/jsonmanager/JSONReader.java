@@ -16,7 +16,7 @@ import javax.json.JsonValue;
 
 /**
  *
- * @author MC
+ * @author AA
  */
 public class JSONReader {
     
@@ -25,11 +25,11 @@ public class JSONReader {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException { //uso il comando throws per gestire l'eccezione nel caso in cui non trovassi il file
 
-        Libro libri[];
+        Libro libri[]; //dichiaro un array della classe libri
         
-        InputStream input = new FileInputStream(JSON_FILE);
+        InputStream input = new FileInputStream(JSON_FILE); //serve a convertire in byte il contenuto del json
         
         JsonReader jsonReader = Json.createReader(input);
         
@@ -41,22 +41,22 @@ public class JSONReader {
         
         JsonArray jsonArray = innerJsonObject.getJsonArray("libri");
         
-        libri = new Libro[jsonArray.size()];
+        libri = new Libro[jsonArray.size()]; //creo un nuovo array della classe libri
         
-        int index = 0;
+        int index = 0; // inizializzo l'indice
         
         for (JsonValue element : jsonArray) {
-            Libro libro = new Libro();
-            
-            libro.setGenere(element.asJsonObject().getString("genere"));
+            Libro libro = new Libro(); //creo un nuovo libro da aggiungere poi all'array per ogni elemento del Json
+            //setto tutti gli attributi della classe libro con i valori contenuti all'interno del file Json
+            libro.setGenere(element.asJsonObject().getString("genere")); 
             libro.setTitolo(element.asJsonObject().getString("titolo"));
             libro.setAutore(element.asJsonObject().getString("autore"));
             libro.setPrezzo((float) element.asJsonObject().getJsonNumber("prezzo").doubleValue());
             
-            libri[index++] = libro;        
+            libri[index++] = libro;   //riempo l'array con i libri creati     
         }
         
-        for (index=0; index<libri.length; index++)
+        for (index=0; index<libri.length; index++) //stampo tutti i libri generati dal precedente ciclo
             System.out.println(libri[index]);
        
     }
